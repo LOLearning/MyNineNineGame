@@ -62,3 +62,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 /My_Nine_Nine_Game/nbproject/private/
+/My_Nine_Nine_Game/build/
