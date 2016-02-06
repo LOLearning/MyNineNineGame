@@ -15,17 +15,18 @@ public class MyNineNineGame
     final static int CARD_TYPE_NORMAL = 4;
     final static int GAME_OVER = -1;
     private static Scanner scn;
-    private static int total =0;
+    private static int total = 0;
+    private static ArrayList<Integer> cardDeck;
 
     public static void main(String[] args)
     {
-        ArrayList<Integer> cardDeck = new ArrayList<Integer>();
+        cardDeck = new ArrayList<Integer>();
         ArrayList<ArrayList<Integer>> playerList = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> playerOrder = new ArrayList<Integer>();
         scn = new Scanner(System.in);
         initPlayerList(playerList);
-        initCardDeck(cardDeck);
-        initPlayerCardList(cardDeck, playerList);
+        initCardDeck();
+        initPlayerCardList( playerList);
         initPlayerOrder(playerOrder);
 
         System.out.println("歡迎來到我的99遊戲");
@@ -34,7 +35,7 @@ public class MyNineNineGame
         System.out.println("歡迎" + name);
         System.out.println("輸入'0'即可立即結束遊戲喔~~");
         System.out.println("--------------開始遊戲--------------");
-        
+
         int position = 1;
         int playCard = 0;
         ArrayList<Integer> getNextPlayer = playerList.get(0);
@@ -42,7 +43,7 @@ public class MyNineNineGame
             int selectCard;
             if (getNextPlayer == playerList.get(0)) {
                 selectCard = UserChooseCard(playerList.get(0));
-                playCard = playOutCard(getNextPlayer, cardDeck, position, selectCard);
+                playCard = playOutCard(getNextPlayer, position, selectCard);
                 position = getNextPlayerPosition(playerOrder, userSequenceNumber(playCard, playerOrder));
                 total = MyNineNineGame.UserChooseCard(playCard);
                 if (isGameOver(position)) {
@@ -59,17 +60,17 @@ public class MyNineNineGame
                 }
             } else {
                 selectCard = MyNineNineGame.AIChooseCard(getNextPlayer);
-                playCard = playOutCard(getNextPlayer, cardDeck, position, selectCard);
+                playCard = playOutCard(getNextPlayer, position, selectCard);
                 position = getNextPlayerPosition(playerOrder, AISequenceNumber(playCard));
                 total = AIChooseCard(playCard);
-                if (isGameOver( position)) {
+                if (isGameOver(position)) {
                     break;
                 }
             }
             getNextPlayer = playerList.get(position - 1);
             if (cardDeck.size() == 0) {
-                initCardDeck(cardDeck);
-                shuffleCard(cardDeck);
+                initCardDeck();
+                shuffleCard();
             }
         }
     }
@@ -113,7 +114,7 @@ public class MyNineNineGame
         if (UserPlayNumber == CARD_REVERSE) {
             outputOrder = CARD_TYPE_REVERSE;
         } else if (UserPlayNumber == CARD_ASSIGN) {
-           
+
             System.out.print("請問要指定哪位玩家  ");
             for (int i = 1; i <= 3; i++) {
                 System.out.print(" " + i + ".[" + playerList.get(i) + "號玩家] ");
@@ -203,7 +204,7 @@ public class MyNineNineGame
 
     public static int UserChooseCard(int cardNumber)
     {
-       
+
         switch (cardNumber) {
             case 13:
                 total = 99;
@@ -242,11 +243,11 @@ public class MyNineNineGame
         return total;
     }
 
-    private static void initPlayerCardList(ArrayList<Integer> cardList, ArrayList<ArrayList<Integer>> player)
+    private static void initPlayerCardList( ArrayList<ArrayList<Integer>> player)
     {
         for (int j = 0; j <= 3; j++) {
             for (int i = 1; i <= 5; i++) {
-                player.get(j).add(shuffleCard(cardList));
+                player.get(j).add(shuffleCard());
             }
         }
     }
@@ -311,7 +312,7 @@ public class MyNineNineGame
 
     public static int UserChooseCard(ArrayList<Integer> player)
     {
-        
+
         System.out.println("我的手牌");
         Collections.sort(player);
         for (int i = 1; i <= 5; i++) {
@@ -322,7 +323,7 @@ public class MyNineNineGame
         return scn.nextInt();
     }
 
-    public static int playOutCard(ArrayList<Integer> curruntPlayer, ArrayList<Integer> cardList, int curruntPlayerNumber, int UserChoose)
+    public static int playOutCard(ArrayList<Integer> curruntPlayer, int curruntPlayerNumber, int UserChoose)
     {
         Collections.sort(curruntPlayer);
         int getcard;
@@ -330,7 +331,7 @@ public class MyNineNineGame
             getcard = GAME_OVER;
         } else {
             getcard = curruntPlayer.get(UserChoose - 1);
-            int number = shuffleCard(cardList);
+            int number = shuffleCard();
             curruntPlayer.remove(UserChoose - 1);
             curruntPlayer.add(number);
             if (isSpecialCard(getcard)) {
@@ -348,21 +349,21 @@ public class MyNineNineGame
                 || getcard == 4 || getcard == 5;
     }
 
-    public static void initCardDeck(ArrayList<Integer> cardList)
+    public static void initCardDeck()
     {
         for (int i = 1; i <= 4; i++) {
             for (int j = 1; j <= 13; j++) {
-                cardList.add(j);
+                cardDeck.add(j);
             }
         }
     }
 
-    public static int shuffleCard(ArrayList<Integer> cardList)
+    public static int shuffleCard()
     {
         Random ran = new Random();
-        int temp = ran.nextInt(cardList.size());
-        int number = cardList.get(temp);
-        cardList.remove(temp);
+        int temp = ran.nextInt(cardDeck.size());
+        int number = cardDeck.get(temp);
+        cardDeck.remove(temp);
         return number;
     }
 }
