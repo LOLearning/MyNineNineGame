@@ -9,11 +9,12 @@ import java.util.Collections;
 public class MyNineNineGame
 {
 
-    static int CARD_REVERSE = 5;//改名子
-    static int CARD_ASSIGN = 4;
-    static int CARD_TYPE_REVERSE = 5;
-    static int CARD_TYPE_NORMAL = 4;
-    static int GAME_OVER = -1;
+    final static int CARD_REVERSE = 5;
+    final static int CARD_ASSIGN = 4;
+    final static int CARD_TYPE_REVERSE = 5;
+    final static int CARD_TYPE_NORMAL = 4;
+    final static int GAME_OVER = -1;
+
     public static void main(String[] args)
     {
         ArrayList<Integer> cardDeck = new ArrayList<Integer>();
