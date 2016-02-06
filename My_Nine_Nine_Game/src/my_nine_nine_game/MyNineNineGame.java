@@ -98,7 +98,6 @@ public class MyNineNineGame
 
     public static void initPlayerList()
     {
-        ArrayList<Integer> temp = new ArrayList<Integer>();
         for (int i = 1; i <= 4; i++) {
             playerList.add(new ArrayList<Integer>());
         }
