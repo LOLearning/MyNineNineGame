@@ -38,7 +38,7 @@ public class MyNineNineGame
         for (;;) {
             int selectCard;
             if (getNextPlayer == playerList.get(0)) {
-                selectCard = UserChooseCard(playerList.get(0));
+                selectCard = UserChooseHandCard(playerList.get(0));
                 playCard = playOutCard(getNextPlayer, selectCard, position);
                 total = UserChooseCard(playCard);
                 if (isGameOver(position)) {
@@ -138,8 +138,7 @@ public class MyNineNineGame
                     System.out.print(" " + i + ".[" + playerOrder.get(i) + "號玩家] ");
                 }
                 System.out.print(":  ");
-                int choose = scn.nextInt();
-                outputOrder = choose;
+                outputOrder= scn.nextInt();
                 break;
             default:
                 outputOrder = CARD_TYPE_NORMAL;
@@ -224,7 +223,6 @@ public class MyNineNineGame
 
     private int UserChooseCard(int cardNumber)
     {
-
         switch (cardNumber) {
             case 13:
                 total = 99;
@@ -328,9 +326,8 @@ public class MyNineNineGame
         return choose + 1;
     }
 
-    private int UserChooseCard(ArrayList<Integer> player)
+    private int UserChooseHandCard(ArrayList<Integer> player)
     {
-
         System.out.println("我的手牌");
         Collections.sort(player);
         for (int i = 1; i <= 5; i++) {
