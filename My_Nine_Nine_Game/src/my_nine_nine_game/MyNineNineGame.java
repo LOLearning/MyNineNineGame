@@ -1,6 +1,5 @@
 package my_nine_nine_game;
 
-import java.util.*;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -22,9 +21,9 @@ public class MyNineNineGame
 
     public static void main(String[] args)
     {
-        cardDeck = new ArrayList<Integer>();
-        playerList = new ArrayList<ArrayList<Integer>>();
-        playerOrder = new ArrayList<Integer>();
+        cardDeck = new ArrayList<>();
+        playerList = new ArrayList<>();
+        playerOrder = new ArrayList<>();
         scn = new Scanner(System.in);
         initPlayerList();
         initCardDeck();
@@ -64,7 +63,7 @@ public class MyNineNineGame
                 position = getNextPlayerPosition(AISequenceNumber(playCard));
             }
             getNextPlayer = playerList.get(position - 1);
-            if (cardDeck.size() == 0) {
+            if (cardDeck.isEmpty()) {
                 initCardDeck();
                 shuffleCard();
             }
@@ -99,20 +98,24 @@ public class MyNineNineGame
     public static void initPlayerList()
     {
         for (int i = 1; i <= 4; i++) {
-            playerList.add(new ArrayList<Integer>());
+            playerList.add(new ArrayList<>());
         }
     }
 
     public static int AISequenceNumber(int AIPlayNumber)
     {
         int outputOrder;
-        if (AIPlayNumber == CARD_REVERSE) {
-            outputOrder = CARD_TYPE_REVERSE;
-        } else if (AIPlayNumber == CARD_ASSIGN) {
-            Random ran = new Random();
-            outputOrder = ran.nextInt(3) + 1;
-        } else {
-            outputOrder = CARD_TYPE_NORMAL;
+        switch (AIPlayNumber) {
+            case CARD_REVERSE:
+                outputOrder = CARD_TYPE_REVERSE;
+                break;
+            case CARD_ASSIGN:
+                Random ran = new Random();
+                outputOrder = ran.nextInt(3) + 1;
+                break;
+            default:
+                outputOrder = CARD_TYPE_NORMAL;
+                break;
         }
         return outputOrder;
     }
@@ -120,19 +123,21 @@ public class MyNineNineGame
     public static int userSequenceNumber(int UserPlayNumber)
     {
         int outputOrder;
-        if (UserPlayNumber == CARD_REVERSE) {
-            outputOrder = CARD_TYPE_REVERSE;
-        } else if (UserPlayNumber == CARD_ASSIGN) {
-
-            System.out.print("請問要指定哪位玩家  ");
-            for (int i = 1; i <= 3; i++) {
-                System.out.print(" " + i + ".[" + playerOrder.get(i) + "號玩家] ");
-            }
-            System.out.print(":  ");
-            int choose = scn.nextInt();
-            outputOrder = choose;
-        } else {
-            outputOrder = CARD_TYPE_NORMAL;
+        switch (UserPlayNumber) {
+            case CARD_REVERSE:
+                outputOrder = CARD_TYPE_REVERSE;
+                break;
+            case CARD_ASSIGN:
+                System.out.print("請問要指定哪位玩家  ");
+                for (int i = 1; i <= 3; i++) {
+                    System.out.print(" " + i + ".[" + playerOrder.get(i) + "號玩家] ");
+                }   System.out.print(":  ");
+                int choose = scn.nextInt();
+                outputOrder = choose;
+                break;
+            default:
+                outputOrder = CARD_TYPE_NORMAL;
+                break;
         }
         return outputOrder;
     }
