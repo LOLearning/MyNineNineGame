@@ -39,34 +39,28 @@ public class MyNineNineGame
         System.out.println("--------------開始遊戲--------------");
 
         int position = 1;
-        int playCard = 0;
+        int playCard;
         ArrayList<Integer> getNextPlayer = playerList.get(0);
         for (;;) {
             int selectCard;
             if (getNextPlayer == playerList.get(0)) {
                 selectCard = UserChooseCard(playerList.get(0));
                 playCard = playOutCard(getNextPlayer, selectCard, position);
+                total = MyNineNineGame.UserChooseCard(playCard);
                 if (isGameOver(position)) {
                     break;
                 }
-                total = MyNineNineGame.UserChooseCard(playCard);
                 position = getNextPlayerPosition(userSequenceNumber(playCard));
-                if (playCard == GAME_OVER) {
-                    System.out.println("遊戲結束!!!");
-                    for (int i = 0; i <= 3; i++) {
-                        System.out.println("**********");
-                        System.out.println("玩家" + (i + 1) + "的手牌");
-                        System.out.println(playerList.get(i));
-                    }
+                if (userGmaeOver(playCard)) {
                     break;
                 }
             } else {
                 selectCard = MyNineNineGame.AIChooseCard(getNextPlayer);
                 playCard = playOutCard(getNextPlayer, selectCard, position);
+                total = AIChooseCard(playCard);
                 if (isGameOver(position)) {
                     break;
                 }
-                total = AIChooseCard(playCard);
                 position = getNextPlayerPosition(AISequenceNumber(playCard));
             }
             getNextPlayer = playerList.get(position - 1);
@@ -75,6 +69,20 @@ public class MyNineNineGame
                 shuffleCard();
             }
         }
+    }
+
+    public static boolean userGmaeOver(int playCard)
+    {
+        if (playCard == GAME_OVER) {
+            System.out.println("遊戲結束!!!");
+            for (int i = 0; i <= 3; i++) {
+                System.out.println("**********");
+                System.out.println("玩家" + (i + 1) + "的手牌");
+                System.out.println(playerList.get(i));
+            }
+            return true;
+        }
+        return false;
     }
 
     public static boolean isGameOver(int position)
