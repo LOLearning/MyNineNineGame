@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class My_Nine_Nine_Game
+public class MyNineNineGame
 {
 
     static int CARD_REVERSE = 5;//改名子
@@ -41,7 +41,7 @@ public class My_Nine_Nine_Game
                 selectCard = UserChooseCard(playerList.get(0));
                 playCard = playOutCard(getNextPlayer, cardDeck, position, selectCard);
                 position = getNextPlayerPosition(playerOrder, userSequenceNumber(playCard, playerOrder));
-                total = My_Nine_Nine_Game.UserChooseCard(playCard, total);
+                total = MyNineNineGame.UserChooseCard(playCard, total);
                 if (isGameOver(total, position)) {
                     break;
                 }
@@ -55,7 +55,7 @@ public class My_Nine_Nine_Game
                     break;
                 }
             } else {
-                selectCard = My_Nine_Nine_Game.AIChooseCard(getNextPlayer, total);
+                selectCard = MyNineNineGame.AIChooseCard(getNextPlayer, total);
                 playCard = playOutCard(getNextPlayer, cardDeck, position, selectCard);
                 position = getNextPlayerPosition(playerOrder, AISequenceNumber(playCard));
                 total = AIChooseCard(playCard, total);
