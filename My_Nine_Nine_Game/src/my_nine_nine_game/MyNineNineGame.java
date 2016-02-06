@@ -14,13 +14,15 @@ public class MyNineNineGame
     final static int CARD_TYPE_REVERSE = 5;
     final static int CARD_TYPE_NORMAL = 4;
     final static int GAME_OVER = -1;
+    private static Scanner scn;
+    private static int total =0;
 
     public static void main(String[] args)
     {
         ArrayList<Integer> cardDeck = new ArrayList<Integer>();
         ArrayList<ArrayList<Integer>> playerList = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> playerOrder = new ArrayList<Integer>();
-        Scanner scn = new Scanner(System.in);
+        scn = new Scanner(System.in);
         initPlayerList(playerList);
         initCardDeck(cardDeck);
         initPlayerCardList(cardDeck, playerList);
@@ -32,7 +34,7 @@ public class MyNineNineGame
         System.out.println("歡迎" + name);
         System.out.println("輸入'0'即可立即結束遊戲喔~~");
         System.out.println("--------------開始遊戲--------------");
-        int total = 0;
+        
         int position = 1;
         int playCard = 0;
         ArrayList<Integer> getNextPlayer = playerList.get(0);
@@ -42,8 +44,8 @@ public class MyNineNineGame
                 selectCard = UserChooseCard(playerList.get(0));
                 playCard = playOutCard(getNextPlayer, cardDeck, position, selectCard);
                 position = getNextPlayerPosition(playerOrder, userSequenceNumber(playCard, playerOrder));
-                total = MyNineNineGame.UserChooseCard(playCard, total);
-                if (isGameOver(total, position)) {
+                total = MyNineNineGame.UserChooseCard(playCard);
+                if (isGameOver(position)) {
                     break;
                 }
                 if (playCard == -1) {
@@ -56,11 +58,11 @@ public class MyNineNineGame
                     break;
                 }
             } else {
-                selectCard = MyNineNineGame.AIChooseCard(getNextPlayer, total);
+                selectCard = MyNineNineGame.AIChooseCard(getNextPlayer);
                 playCard = playOutCard(getNextPlayer, cardDeck, position, selectCard);
                 position = getNextPlayerPosition(playerOrder, AISequenceNumber(playCard));
-                total = AIChooseCard(playCard, total);
-                if (isGameOver(total, position)) {
+                total = AIChooseCard(playCard);
+                if (isGameOver( position)) {
                     break;
                 }
             }
@@ -72,7 +74,7 @@ public class MyNineNineGame
         }
     }
 
-    public static boolean isGameOver(int total, int position)
+    public static boolean isGameOver(int position)
     {
         System.out.println("目前分數: " + total);
         System.out.println("**********");
@@ -111,7 +113,7 @@ public class MyNineNineGame
         if (UserPlayNumber == CARD_REVERSE) {
             outputOrder = CARD_TYPE_REVERSE;
         } else if (UserPlayNumber == CARD_ASSIGN) {
-            Scanner scn = new Scanner(System.in);
+           
             System.out.print("請問要指定哪位玩家  ");
             for (int i = 1; i <= 3; i++) {
                 System.out.print(" " + i + ".[" + playerList.get(i) + "號玩家] ");
@@ -160,7 +162,7 @@ public class MyNineNineGame
         }
     }
 
-    public static int AIChooseCard(int cardNumber, int total)
+    public static int AIChooseCard(int cardNumber)
     {
         switch (cardNumber) {
             case 13:
@@ -199,9 +201,9 @@ public class MyNineNineGame
         return total;
     }
 
-    public static int UserChooseCard(int cardNumber, int total)
+    public static int UserChooseCard(int cardNumber)
     {
-        Scanner scn = new Scanner(System.in);
+       
         switch (cardNumber) {
             case 13:
                 total = 99;
@@ -249,7 +251,7 @@ public class MyNineNineGame
         }
     }
 
-    public static int AIChooseCard(ArrayList<Integer> player, int total)
+    public static int AIChooseCard(ArrayList<Integer> player)
     {
 
         int choose = 3;
@@ -309,7 +311,7 @@ public class MyNineNineGame
 
     public static int UserChooseCard(ArrayList<Integer> player)
     {
-        Scanner scn = new Scanner(System.in);
+        
         System.out.println("我的手牌");
         Collections.sort(player);
         for (int i = 1; i <= 5; i++) {
