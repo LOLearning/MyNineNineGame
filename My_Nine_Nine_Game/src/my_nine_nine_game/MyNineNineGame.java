@@ -18,10 +18,76 @@ public class MyNineNineGame
     private ArrayList<Integer> cardDeck;
     public ArrayList<ArrayList<Integer>> playerList;
     private ArrayList<Integer> playerOrder;
-    public int loser;
     private String name = "Default";
+    public ArrayList<Integer> getNextPlayer;
+    private int position = 1;
 
-    public void NineNineGame()
+    public boolean body( )
+    {
+        if (getNextPlayer == playerList.get(0)) {
+            int playCard = user(position);
+            if (gameOver(position)) {
+                return true;
+            }
+            position = getNextPlayerPosition(userSequenceNumber(playCard));
+            if (userChooseGameOver(playCard)) {
+                return true;
+            }
+        } else {
+            int playCard = AI(position);
+            if (gameOver(position)) {
+                return true;
+            }
+            position = getNextPlayerPosition(AISequenceNumber(playCard));
+        }
+        getNextPlayer = playerList.get(position - 1);
+        if (cardDeck.isEmpty()) {
+            initCardDeck();
+            shuffleCard();
+        }
+        return false;
+    }
+
+    private int AI(int position)
+    {
+        int selectCard;
+        int playCard;
+        selectCard = AIChooseCard(getNextPlayer);
+        playCard = playOutCard(getNextPlayer, selectCard, position);
+        addHandCard(getNextPlayer, selectCard);
+        AIChooseCard(playCard);
+        return playCard;
+    }
+
+    private boolean userChooseGameOver(int playCard)
+    {
+        if (userGmaeOver(playCard)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean gameOver(int position)
+    {
+        if (isGameOver(position)) {
+            return true;
+        }
+        return false;
+    }
+
+    private int user(int position)
+    {
+        int playCard;
+        int selectCard;
+        selectCard = UserChooseHandCard(playerList.get(0));
+        playCard = playOutCard(getNextPlayer, selectCard, position);
+        addHandCard(getNextPlayer, selectCard);
+        UserChooseCard(playCard);
+        return playCard;
+    }
+    
+
+    public void init()
     {
         cardDeck = new ArrayList<>();
         playerList = new ArrayList<>();
@@ -32,43 +98,8 @@ public class MyNineNineGame
         initPlayerCardList();
         initPlayerOrder();
         total = 0;
-        int position = 1;
-        int playCard;
-        ArrayList<Integer> getNextPlayer = playerList.get(0);
-        for (;;) {
-            int selectCard;
-            if (getNextPlayer == playerList.get(0)) {
-                selectCard = UserChooseHandCard(playerList.get(0));
-                playCard = playOutCard(getNextPlayer, selectCard, position);
-                total = UserChooseCard(playCard);
-                if (isGameOver(position)) {
-                    loser = position;
-                    break;
-                }
-                position = getNextPlayerPosition(userSequenceNumber(playCard));
-                if (userGmaeOver(playCard)) {
-                    break;
-                }
-            } else {
-                selectCard = AIChooseCard(getNextPlayer);
-                playCard = playOutCard(getNextPlayer, selectCard, position);
-                total = AIChooseCard(playCard);
-                if (isGameOver(position)) {
-                    loser = position;
-                    break;
-                }
-                position = getNextPlayerPosition(AISequenceNumber(playCard));
-            }
-            getNextPlayer = playerList.get(position - 1);
-            if (cardDeck.isEmpty()) {
-                initCardDeck();
-                shuffleCard();
-
-            }
-        }
-        
+        getNextPlayer = playerList.get(0);
     }
-
 
     public void setName(String playerName)
     {
@@ -138,7 +169,7 @@ public class MyNineNineGame
                     System.out.print(" " + i + ".[" + playerOrder.get(i) + "號玩家] ");
                 }
                 System.out.print(":  ");
-                outputOrder= scn.nextInt();
+                outputOrder = scn.nextInt();
                 break;
             default:
                 outputOrder = CARD_TYPE_NORMAL;
@@ -182,7 +213,7 @@ public class MyNineNineGame
         }
     }
 
-    private int AIChooseCard(int cardNumber)
+    private void AIChooseCard(int cardNumber)
     {
         switch (cardNumber) {
             case 13:
@@ -218,10 +249,9 @@ public class MyNineNineGame
             default:
                 total = total + cardNumber;
         }
-        return total;
     }
 
-    private int UserChooseCard(int cardNumber)
+    private void UserChooseCard(int cardNumber)
     {
         switch (cardNumber) {
             case 13:
@@ -258,7 +288,7 @@ public class MyNineNineGame
             default:
                 total = total + cardNumber;
         }
-        return total;
+
     }
 
     private void initPlayerCardList()
@@ -346,15 +376,24 @@ public class MyNineNineGame
             getcard = GAME_OVER;
         } else {
             getcard = curruntPlayer.get(UserChoose - 1);
-            int number = shuffleCard();
-            curruntPlayer.remove(UserChoose - 1);
-            curruntPlayer.add(number);
             if (isSpecialCard(getcard)) {
                 System.out.println("玩家" + position + "出: " + "特殊牌" + getcard);
             } else {
                 System.out.println("玩家" + position + "出: " + getcard);
             }
         }
+        return getcard;
+    }
+
+    private int addHandCard(ArrayList<Integer> curruntPlayer, int UserChoose)
+    {
+        if(UserChoose ==0){
+            return 0;
+        }
+        int getcard;
+        getcard = curruntPlayer.get(UserChoose - 1);
+        curruntPlayer.remove(UserChoose - 1);
+        curruntPlayer.add(shuffleCard());
         return getcard;
     }
 

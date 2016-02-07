@@ -18,11 +18,13 @@ public class MyMain
     {
         MyNineNineGame myGame = new MyNineNineGame();
         myGame.setName(gameName());
-        myGame.NineNineGame();
-        System.out.println(myGame.loser);
-        System.out.println(myGame.playerList);
-        myGame.setName(gameName());
-        myGame.NineNineGame();
+        myGame.init();
+        
+        for (;;) {
+            if (myGame.body()) {
+                break;
+            }
+        }
 
     }
 
@@ -38,4 +40,5 @@ public class MyMain
         System.out.println("--------------開始遊戲--------------");
         return name;
     }
+
 }
