@@ -13,7 +13,7 @@ public class MyNineNineGame
     private final int CARD_TYPE_REVERSE = 5;
     private final int CARD_TYPE_NORMAL = 4;
     private final int GAME_OVER = -1;
-    private int selectCard;
+    public int selectCard;
     private Scanner scn;
     public int total;
     private ArrayList<Integer> cardDeck;
@@ -26,6 +26,7 @@ public class MyNineNineGame
 
     public boolean body()
     {
+        addHandCard(getNextPlayer, selectCard);
         if (isGameOver()) {
             return true;
         }
@@ -326,20 +327,14 @@ public class MyNineNineGame
         return getcard;
     }
 
-    private int addHandCard(ArrayList<Integer> curruntPlayer, int UserChoose)
+    private void addHandCard(ArrayList<Integer> curruntPlayer, int Choose)
     {
-        if (UserChoose == 0) {
-            return 0;
-        }
-        int getcard;
-        getcard = curruntPlayer.get(UserChoose - 1);
-        curruntPlayer.remove(UserChoose - 1);
+        curruntPlayer.remove(Choose - 1);
         curruntPlayer.add(shuffleCard());
         if (cardDeck.isEmpty()) {
             initCardDeck();
             shuffleCard();
         }
-        return getcard;
     }
 
     public boolean isSpecialCard(int getcard)

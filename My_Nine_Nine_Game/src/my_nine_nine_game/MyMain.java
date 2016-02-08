@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package my_nine_nine_game;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-/**
- *
- * @author st8740212
- */
 public class MyMain
 {
 
@@ -25,13 +16,12 @@ public class MyMain
         myGame = new MyNineNineGame();
         myGame.setName(gameName());
         myGame.init();
-
         for (;;) {
-            int selectCard = UserChooseHandCard(myGame.playerList.get(0));
-            if (userGameOver(selectCard)) {
+            myGame.selectCard = UserChooseHandCard(myGame.playerList.get(0));
+            if (userGameOver(myGame.selectCard)) {
                 break;
             }
-            myGame.playCard = playOutCard(myGame.getNextPlayer, selectCard, 1);
+            myGame.playCard = playOutCard(myGame.getNextPlayer, myGame.selectCard, 1);
             myGame.UserChooseCard(myGame.playCard, specialCard(myGame.playCard));
 
             if (myGame.body()) {
@@ -78,7 +68,6 @@ public class MyMain
         } else {
             System.out.println("玩家" + position + "出: " + getcard);
         }
-
         return getcard;
     }
 
@@ -114,5 +103,5 @@ public class MyMain
     {
         System.out.println("玩家" + myGame.position + "輸了!!!");
     }
-    
+
 }
