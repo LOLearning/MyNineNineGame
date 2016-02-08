@@ -46,11 +46,12 @@ public class MyNineNineGame
             }
         }
     }
-    private void printTotal(){
-    System.out.println("目前分數: "+total);
-    System.out.println("*****************");
-    
-}
+
+    private void printTotal()
+    {
+        System.out.println("目前分數: " + total);
+        System.out.println("*****************");
+    }
 
     private int AI(int position)
     {
@@ -341,7 +342,7 @@ public class MyNineNineGame
         return getcard;
     }
 
-    private boolean isSpecialCard(int getcard)
+    public boolean isSpecialCard(int getcard)
     {
         return getcard == 10 || getcard == 11 || getcard == 12 || getcard == 13
                 || getcard == 4 || getcard == 5;

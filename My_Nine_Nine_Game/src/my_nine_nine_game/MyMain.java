@@ -23,7 +23,7 @@ public class MyMain
     {
         scn = new Scanner(System.in);
         myGame = new MyNineNineGame();
-        //myGame.setName(gameName());
+        myGame.setName(gameName());
         myGame.init();
 
         for (;;) {
@@ -73,8 +73,7 @@ public class MyMain
         Collections.sort(curruntPlayer);
         int getcard;
         getcard = curruntPlayer.get(UserChoose - 1);
-        if (getcard == 10 || getcard == 11 || getcard == 12 || getcard == 13
-                || getcard == 4 || getcard == 5) {
+        if (myGame.isSpecialCard(getcard)) {
             System.out.println("玩家" + position + "出: " + "特殊牌" + getcard);
         } else {
             System.out.println("玩家" + position + "出: " + getcard);
