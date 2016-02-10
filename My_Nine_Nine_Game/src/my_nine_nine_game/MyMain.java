@@ -9,7 +9,6 @@ public class MyMain
 
     private static MyNineNineGame myGame;
     private static Scanner scn;
-
     public static void main(String[] args)
     {
         scn = new Scanner(System.in);
@@ -29,7 +28,6 @@ public class MyMain
                 break;
             }
         }
-
     }
 
     private static String gameName()
@@ -47,7 +45,6 @@ public class MyMain
 
     private static int UserChooseHandCard(ArrayList<Integer> player)
     {
-
         System.out.println("我的手牌");
         Collections.sort(player);
         for (int i = 1; i <= 5; i++) {
@@ -103,5 +100,4 @@ public class MyMain
     {
         System.out.println("玩家" + myGame.position + "輸了!!!");
     }
-
 }

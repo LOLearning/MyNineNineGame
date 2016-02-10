@@ -7,7 +7,6 @@ import java.util.Collections;
 
 public class MyNineNineGame
 {
-
     private final int CARD_REVERSE = 5;
     private final int CARD_ASSIGN = 4;
     private final int CARD_TYPE_REVERSE = 5;
